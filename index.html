@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>真の江戸っ子ゲーム</title>
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/favicon.ico">
+</head>
+<body>
+  <div class="container">
+    <div class="title">真の江戸っ子になれ！</div>
+    <div class="top-container">
+      <div id="top-explain"><p>Q. これは何？</p></div>
+      <div id="top-roundcounter">1/6 ラウンド</div>
+    </div>
+    <div class="status-container">
+      <div class="player-card player-cpu1">
+        <h3>CPU1</h3>
+        <p>残り銭: <span id="cpu1Money">100</span> 銭</p>
+      </div>
+      <div class="player-card player-human">
+        <h3>あなた</h3>
+        <p>残り銭: <span id="playerMoney">100</span> 銭</p>
+      </div>
+      <div class="player-card player-cpu2">
+        <h3>CPU2</h3>
+        <p>残り銭: <span id="cpu2Money">100</span> 銭</p>
+      </div>
+    </div>
+    <div class="line"></div>
+    <p class="select-explain">選択肢:</p>
+    <div class="select-container">
+      <div class="action-btn">蕎麦屋で食事: 10～15銭</div>
+      <div class="action-btn">茶屋で一服: 8～12銭</div>
+      <div class="action-btn">博打に興じる: 5～25銭</div>
+      <div class="action-btn">歌舞伎鑑賞: 15～20銭</div>
+      <div class="action-btn">町で買い物: 10～25銭</div>
+      <div class="action-btn">何もしない: 0銭</div>
+    </div>
+  </div>
+  <div id="modal-explain">
+    <div class="modal-cover"></div>
+    <div class="modal-container">
+      <p class="title">Q. これは何？</p>
+      <p class="modal-explain-text">江戸っ子は「宵越しの銭は持たない」と言われています。であるならば、お金を使いきれない者はFake野郎ということです。Truthな江戸っ子を目指し、所持金をできるだけ使うゲームです。</p>
+      <ul>
+        <li>プレイヤー（あなたと2人のCPU）は初期資金100銭を持っています</li>
+        <li>各ラウンドで支出先を選択してお金を使っていきます</li>
+        <li>支出は最小値と最大値の間のランダムな整数値になります</li>
+        <li>お金が足りなくなったらその時点で脱落（最下位）です。Fakeでも借金漬けよりはましなので</li>
+        <li>6ラウンド終了時に最も資金が少ない人の勝利です</li>
+      </ul>
+      <button id="modal-explain-btn">close</button>
+    </div>
+  </div>
+  <div id="modal-effect">
+    <div class="modal-cover"></div>
+    <div class="effect-container">
+      <div id="effect-pic"></div>
+      <div class="text-log-container">
+        <div id="player-log-text"></div>
+        <div class="cpu-log-container">
+          <div id="cpu1-log-text"></div>
+          <div id="cpu2-log-text"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./game.js"></script>
+  <script src="./modal.js"></script>
+</body>
+</html>

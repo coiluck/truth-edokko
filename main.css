@@ -1,0 +1,252 @@
+:root {
+  --primary-color: #8C4A3C;
+  --secondary-color: #F2E6D8;
+  --accent-color: #D9A76A;
+  --text-color: #402E32;
+  --player-color: #5C8374;
+  --cpu-color: #AA8B73;
+}
+body {
+  font-family: "Times New Roman", "游明朝", "Yu Mincho", "游明朝体", "YuMincho", "ヒラギノ明朝 Pro W3", "Hiragino Mincho Pro", "HiraMinProN-W3", "ＭＳ Ｐ明朝", "MS PMincho", serif;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 20px 0;
+  -webkit-user-select: none;
+  user-select: none;
+}
+a,p,h1,h2,h3,button {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #FFF9EE;
+  padding: 20px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 10px;
+}
+.top-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.top-container * {
+  text-align: center;
+}
+#top-explain p {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: var(--text-color);
+  color: var(--secondary-color);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.status-container {
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.player-card {
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.player-card p {
+  font-size: .8em;
+}
+.player-human {
+  background-color: var(--player-color);
+  color: white;
+}
+.player-cpu1, .player-cpu2 {
+  background-color: var(--cpu-color);
+  color: white;
+}
+.line {
+  width: calc(100% - 20px - 20px);
+  height: 1px;
+  background-color: #888;
+  margin: 30px auto 30px;
+}
+.select-explain {
+  /* 「選択肢:」の文字 */
+  padding: 0 20px;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+.select-container {
+  padding: 0 20px;
+  display: grid;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+.action-btn {
+  padding: 10px;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  text-align: center;
+  border-radius: 5px;
+  border: 2px solid var(--primary-color);
+  cursor: pointer;
+}
+@media (min-width: 768px) {
+  .select-container {
+    grid-template-columns: repeat(2, 1fr); /* 2列 */
+  }
+}
+@media (max-width: 767px) {
+  .select-container {
+    grid-template-columns: 1fr; /* 1列 */
+  }
+}
+#modal-explain {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+.modal-cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: .7;
+  z-index: 200
+}
+.modal-container {
+  position: relative;
+  width: 80%;
+  height: calc(100% - 80px);
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: var(--secondary-color);
+  opacity: 1;
+  z-index: 300;
+}
+.modal-explain-text{
+  margin-top: 30px;
+  font-size: .9em;
+  margin-bottom: 30px;
+}
+.modal-container li {
+  font-size: .9em;
+  margin-bottom: 10px;
+}
+#modal-explain-btn {
+  display: block;
+  width: auto;
+  margin: 0 auto;
+  padding: 0 8px;
+  font-size: medium;
+  font-family: Times, Courier, serif;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+#modal-explain-btn::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: var(--text-color);
+  margin-top: 1px;
+}
+#modal-effect {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 150;
+}
+.effect-container {
+  position: relative;
+  width: 80%;
+  height: calc(100% - 80px);
+  max-width: 700px;
+  margin: 20px auto;
+  opacity: 1;
+  z-index: 350;
+}
+#effect-pic {
+  display: flex;
+  justify-content: center;
+}
+#effect-pic img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+.text-log-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+#player-log-text {
+  padding: 10px;
+  color: var(--secondary-color)
+}
+.cpu-log-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+#cpu1-log-text, #cpu2-log-text {
+  padding: 10px;
+  color: var(--secondary-color)
+}
+#cpu2-log-text {
+  border-right: none;
+}
+@media (min-width: 1024px) {
+  .text-log-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  #player-log-text {
+    grid-column: span 2;
+  }
+  .cpu-log-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+} 
+
+.fade-in {
+  animation: fadeIn 0.5s;
+  animation-fill-mode: both;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
