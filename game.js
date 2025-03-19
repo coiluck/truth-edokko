@@ -9,12 +9,12 @@ let gameState = {
 };
 // ゲームデータ
 const actions = [
-  {"name": "蕎麦屋で食事", "min_cost": 10, "max_cost": 15, "pic_pass": "./images/soba.png", "log-text": "蕎麦を食べた"},
-  {"name": "茶屋で一服", "min_cost": 8, "max_cost": 12, "pic_pass": "./images/chaya.png", "log-text": "茶屋で休憩した"},
-  {"name": "博打に興じる", "min_cost": 5, "max_cost": 25, "pic_pass": "./images/saikoro.png", "log-text": "博打にチャレンジ！"},
-  {"name": "歌舞伎鑑賞", "min_cost": 15, "max_cost": 20, "pic_pass": "./images/kabuki.png", "log-text": "歌舞伎を鑑賞した"},
-  {"name": "町で買い物", "min_cost": 10, "max_cost": 25, "pic_pass": "./images/city.png", "log-text": "街をぶらついた"},
-  {"name": "何もしない", "min_cost": 0, "max_cost": 0, "pic_pass": "./images/none.png", "log-text": "何もしなかった"}
+  {"name": "蕎麦屋で食事", "min_cost": 10, "max_cost": 15, "pic_pass": "./images/soba.avif", "log_text": "蕎麦を食べた"},
+  {"name": "茶屋で一服", "min_cost": 8, "max_cost": 12, "pic_pass": "./images/chaya.avif", "log_text": "茶屋で休憩した"},
+  {"name": "博打に興じる", "min_cost": 5, "max_cost": 25, "pic_pass": "./images/saikoro.avif", "log_text": "博打にチャレンジ！"},
+  {"name": "歌舞伎鑑賞", "min_cost": 15, "max_cost": 20, "pic_pass": "./images/kabuki.avif", "log_text": "歌舞伎を鑑賞した"},
+  {"name": "町で買い物", "min_cost": 10, "max_cost": 25, "pic_pass": "./images/city.avif", "log_text": "街をぶらついた"},
+  {"name": "何もしない", "min_cost": 0, "max_cost": 0, "pic_pass": "./images/none.avif", "log_text": "何もしなかった"}
 ];
 // DOM要素の参照を取得
 const actionButtons = document.querySelectorAll('.action-btn');
@@ -37,10 +37,10 @@ actionButtons.forEach((button, index) => {
 function handlePlayerAction(actionIndex) {
   const playerAction = actions[actionIndex];
   
-  // 1. プレイヤーの支出額を計算（min_costからmax_costの間のランダムな整数）
+  // プレイヤーの支出額を計算（min_costからmax_costの間のランダムな整数）
   const playerCost = calculateRandomCost(playerAction.min_cost, playerAction.max_cost);
   
-  // 2. CPUの選択処理
+  // CPUの選択処理
   const cpu1Choice = chooseCPUAction(1);
   const cpu2Choice = chooseCPUAction(2);
   
@@ -48,11 +48,11 @@ function handlePlayerAction(actionIndex) {
   const cpu1Action = actions[cpu1Choice];
   const cpu2Action = actions[cpu2Choice];
   
-  // 3. CPUの支出額を計算
+  // CPUの支出額を計算
   const cpu1Cost = calculateRandomCost(cpu1Action.min_cost, cpu1Action.max_cost);
   const cpu2Cost = calculateRandomCost(cpu2Action.min_cost, cpu2Action.max_cost);
   
-  // 4. 支払い可能かチェックして資金を更新
+  // 支払い可能かチェック
   const playerCanPay = gameState.players[0].money >= playerCost;
   const cpu1CanPay = gameState.players[1].money >= cpu1Cost;
   const cpu2CanPay = gameState.players[2].money >= cpu2Cost;
@@ -82,24 +82,32 @@ function handlePlayerAction(actionIndex) {
   // 画面の残金表示を更新
   updateMoneyDisplay();
   
-  // 5. エフェクトモーダルを表示
+  // 選択エフェクトを表示
   modalEffect.style.display = 'block';
   effectPic.innerHTML = `<img src="${playerAction.pic_pass}" class="fade-in" alt="${playerAction.name}">`;
   
-  // 6. 0.5秒後にログテキストを表示
-  setTimeout(() => {
-    playerLogText.textContent = `あなた: ${playerAction.log_text} (-${playerCost}銭) 残り: ${gameState.players[0].money}銭`;
-    cpu1LogText.textContent = `CPU1: ${cpu1Action.log_text} (-${cpu1Cost}銭) 残り: ${gameState.players[1].money}銭`;
-    cpu2LogText.textContent = `CPU2: ${cpu2Action.log_text} (-${cpu2Cost}銭) 残り: ${gameState.players[2].money}銭`;
-  }, 500);
-  
-  // 7. モーダルクリックイベントリスナーを追加
+  // 画像に遅れてログテキストを表示
+  setTimeout(function() { 
+    playerLogText.innerHTML = `あなた: ${playerAction.log_text} (-${playerCost}銭)<br> 残り: ${gameState.players[0].money}銭`;
+    playerLogText.classList.add("fast-fade-in");
+  }, 200);
+  setTimeout(function() { 
+    cpu1LogText.innerHTML = `CPU1: ${cpu1Action.log_text} (-${cpu1Cost}銭)<br> 残り: ${gameState.players[1].money}銭`;
+    cpu2LogText.innerHTML = `CPU2: ${cpu2Action.log_text} (-${cpu2Cost}銭)<br> 残り: ${gameState.players[2].money}銭`;
+    cpu1LogText.classList.add("fast-fade-in");
+    cpu2LogText.classList.add("fast-fade-in");
+  }, 400);
+
+  // モーダルクリックイベントリスナーを追加
   const handleModalClick = () => {
     modalEffect.style.display = 'none';
     effectPic.innerHTML = '';
     playerLogText.textContent = '';
     cpu1LogText.textContent = '';
     cpu2LogText.textContent = '';
+    playerLogText.classList.remove("fast-fade-in");
+    cpu1LogText.classList.remove("fast-fade-in");
+    cpu2LogText.classList.remove("fast-fade-in");
     
     // ラウンドを進める
     gameState.round++;
@@ -123,14 +131,14 @@ function calculateRandomCost(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// CPUの行動選択関数
+// CPUの行動選択
 function chooseCPUAction(cpuIndex) {
   const cpu = gameState.players[cpuIndex];
   
   // 支払い可能なアクションの配列を作成
   const availableActions = [];
   for (let i = 0; i < actions.length; i++) {
-    if (actions[i].max_cost <= cpu.money) {
+    if (actions[i].max_cost <= cpu.money && actions[i].name !== "何もしない") {
       availableActions.push(i);
     }
   }
@@ -146,14 +154,13 @@ function chooseCPUAction(cpuIndex) {
   );
   
   // 残金最多なら「茶屋で一服」、そうでなければ「何もしない」を選択
-  // インデックスを確実に返す
   const teaHouseIndex = actions.findIndex(action => action.name === "茶屋で一服");
   const doNothingIndex = actions.findIndex(action => action.name === "何もしない");
   
   if (hasMostMoney && actions[teaHouseIndex].max_cost <= cpu.money) {
     return teaHouseIndex;
   } else {
-    return doNothingIndex; // 「何もしない」は常に選択可能（コスト0）
+    return doNothingIndex;
   }
 }
 
@@ -168,7 +175,7 @@ function updateMoneyDisplay() {
 function gameOver(loserIndex, attemptedCost) {
   let message = '';
   if (loserIndex === 0) {
-    message = `あなたは${attemptedCost}銭支払おうとしましたが、残金${gameState.players[0].money}銭では足りませんでした。Fakeな江戸っ子ですね...`;
+    message = `あなたは${attemptedCost}銭支払おうとしましたが、残金${gameState.players[0].money}銭では足りませんでした。`;
   } else {
     message = `${gameState.players[loserIndex].name}は${attemptedCost}銭支払おうとしましたが、残金${gameState.players[loserIndex].money}銭では足りませんでした。`;
   }
@@ -176,14 +183,28 @@ function gameOver(loserIndex, attemptedCost) {
   // プレイヤーを脱落状態にする
   gameState.players[loserIndex].eliminated = true;
   
-  alert(message);
+  // 結果表示用のモーダルを設定
+  const resultModal = document.getElementById('modal-result');
+  const playerResult = document.getElementById('player-result');
+  const cpu1Result = document.getElementById('cpu1-result');
+  const cpu2Result = document.getElementById('cpu2-result');
+  const resultComment = document.getElementById('result-comment');
   
-  // 最終スコアを表示
-  const finalScores = gameState.players.map(player => `${player.name}: ${player.money}銭`).join('\n');
-  alert(`ゲーム終了！\n最終スコア:\n${finalScores}`);
+  // 結果を設定
+  resultComment.innerHTML = message + "<br>Fakeな江戸っ子ですね...";
+  playerResult.textContent = `あなた: ${gameState.players[0].money}銭`;
+  cpu1Result.textContent = `CPU1: ${gameState.players[1].money}銭`;
+  cpu2Result.textContent = `CPU2: ${gameState.players[2].money}銭`;
   
-  // ゲームをリセット
-  resetGame();
+  // 結果モーダルを表示
+  resultModal.style.display = 'block';
+  
+  // モーダルクリックでゲームリセット
+  const modalCover = resultModal.querySelector('.modal-cover');
+  modalCover.addEventListener('click', function() {
+    resultModal.style.display = 'none';
+    resetGame();
+  });
 }
 
 // ゲーム終了処理関数
@@ -200,22 +221,40 @@ function finishGame() {
   });
   
   let message = '';
+  let winner = '';
   if (winnerIndex === 0) {
     message = `おめでとう！あなたは残金${minMoney}銭で真の江戸っ子の称号を獲得しました！`;
+    winner = "あなた"
   } else {
     message = `${gameState.players[winnerIndex].name}が残金${minMoney}銭で真の江戸っ子の称号を獲得しました！`;
+    winner = `${gameState.players[winnerIndex].name}`
   }
   
-  alert(message);
+  // 結果表示用のモーダルを設定
+  const resultModal = document.getElementById('modal-result');
+  const playerResult = document.getElementById('player-result');
+  const cpu1Result = document.getElementById('cpu1-result');
+  const cpu2Result = document.getElementById('cpu2-result');
+  const winnerResult = document.getElementById('winner');
+  const resultComment = document.getElementById('result-comment');
   
-  // 最終スコアを表示
-  const finalScores = gameState.players.map(player => `${player.name}: ${player.money}銭`).join('\n');
-  alert(`ゲーム終了！\n最終スコア:\n${finalScores}`);
+  // 結果を設定
+  resultComment.innerHTML = message + "<br>あなたはFakeな江戸っ子です。";
+  playerResult.textContent = `あなた: ${gameState.players[0].money}銭`;
+  cpu1Result.textContent = `CPU1: ${gameState.players[1].money}銭`;
+  cpu2Result.textContent = `CPU2: ${gameState.players[2].money}銭`;
+  winnerResult.textContent = "勝者: " + winner;
   
-  // ゲームをリセット
-  resetGame();
+  // 結果モーダルを表示
+  resultModal.style.display = 'block';
+  
+  // モーダルクリックでゲームリセット
+  const modalCover = resultModal.querySelector('.modal-cover');
+  modalCover.addEventListener('click', function() {
+    resultModal.style.display = 'none';
+    resetGame();
+  });
 }
-
 // ゲームをリセットする関数
 function resetGame() {
   gameState = {

@@ -39,8 +39,9 @@
       <div class="action-btn">何もしない: 0銭</div>
     </div>
   </div>
+  <!--ルール表示用-->
   <div id="modal-explain">
-    <div class="modal-cover"></div>
+    <div class="modal-cover" id="modal-explain-cover"></div>
     <div class="modal-container">
       <p class="title">Q. これは何？</p>
       <p class="modal-explain-text">江戸っ子は「宵越しの銭は持たない」と言われています。であるならば、お金を使いきれない者はFake野郎ということです。Truthな江戸っ子を目指し、所持金をできるだけ使うゲームです。</p>
@@ -54,6 +55,7 @@
       <button id="modal-explain-btn">close</button>
     </div>
   </div>
+  <!--選択エフェクト表示用-->
   <div id="modal-effect">
     <div class="modal-cover"></div>
     <div class="effect-container">
@@ -65,6 +67,18 @@
           <div id="cpu2-log-text"></div>
         </div>
       </div>
+    </div>
+  </div>
+  <!--結果表示用-->
+  <div id="modal-result">
+    <div class="modal-cover"></div>
+    <div class="result-text-container">
+      <div class="result-title">最終スコア</div>
+      <div id="player-result"></div>
+      <div id="cpu1-result"></div>
+      <div id="cpu2-result"></div>
+      <div id="winner"></div>
+      <div id="result-comment"></div>
     </div>
   </div>
   <script src="./game.js"></script>
