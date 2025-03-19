@@ -195,7 +195,7 @@ function gameOver(loserIndex, attemptedCost) {
   const resultComment = document.getElementById('result-comment');
   
   // 結果を設定
-  resultComment.innerHTML = message + "<br>Fakeな江戸っ子ですね...";
+  resultComment.innerHTML = message;
   playerResult.textContent = `あなた: ${gameState.players[0].money}銭`;
   cpu1Result.textContent = `CPU1: ${gameState.players[1].money}銭`;
   cpu2Result.textContent = `CPU2: ${gameState.players[2].money}銭`;
@@ -230,7 +230,7 @@ function finishGame() {
     message = `おめでとう！あなたは残金${minMoney}銭で真の江戸っ子の称号を獲得しました！`;
     winner = "あなた"
   } else {
-    message = `${gameState.players[winnerIndex].name}が残金${minMoney}銭で真の江戸っ子の称号を獲得しました！`;
+    message = `${gameState.players[winnerIndex].name}が残金${minMoney}銭で真の江戸っ子の称号を獲得しました！<br>あなたはFakeな江戸っ子です。`;
     winner = `${gameState.players[winnerIndex].name}`
   }
   
@@ -243,7 +243,7 @@ function finishGame() {
   const resultComment = document.getElementById('result-comment');
   
   // 結果を設定
-  resultComment.innerHTML = message + "<br>あなたはFakeな江戸っ子です。";
+  resultComment.innerHTML = message;
   playerResult.textContent = `あなた: ${gameState.players[0].money}銭`;
   cpu1Result.textContent = `CPU1: ${gameState.players[1].money}銭`;
   cpu2Result.textContent = `CPU2: ${gameState.players[2].money}銭`;
