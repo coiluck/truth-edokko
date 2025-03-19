@@ -192,13 +192,36 @@ function gameOver(loserIndex, attemptedCost) {
   const playerResult = document.getElementById('player-result');
   const cpu1Result = document.getElementById('cpu1-result');
   const cpu2Result = document.getElementById('cpu2-result');
+  const winnerResult = document.getElementById('winner');
   const resultComment = document.getElementById('result-comment');
+  
+  // 残りのプレイヤーから一番お金の少ない人を勝者とする
+  let minMoney = Infinity;
+  let winnerIndex = -1;
+  
+  gameState.players.forEach((player, index) => {
+    if (!player.eliminated && player.money < minMoney) {
+      minMoney = player.money;
+      winnerIndex = index;
+    }
+  });
+  
+  let winner = '';
+  if (winnerIndex !== -1) {
+    winner = gameState.players[winnerIndex].name;
+  }
   
   // 結果を設定
   resultComment.innerHTML = message;
   playerResult.textContent = `あなた: ${gameState.players[0].money}銭`;
   cpu1Result.textContent = `CPU1: ${gameState.players[1].money}銭`;
   cpu2Result.textContent = `CPU2: ${gameState.players[2].money}銭`;
+  
+  if (winnerIndex !== -1) {
+    winnerResult.textContent = `勝者: ${winner}`;
+  } else {
+    winnerResult.textContent = '';
+  }
   
   // 結果モーダルを表示
   resultModal.style.display = 'block';
