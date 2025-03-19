@@ -91,6 +91,7 @@ function handlePlayerAction(actionIndex) {
     playerLogText.innerHTML = `あなた: ${playerAction.log_text} (-${playerCost}銭)<br> 残り: ${gameState.players[0].money}銭`;
     playerLogText.classList.add("fast-fade-in");
   }, 200);
+  
   setTimeout(function() { 
     cpu1LogText.innerHTML = `CPU1: ${cpu1Action.log_text} (-${cpu1Cost}銭)<br> 残り: ${gameState.players[1].money}銭`;
     cpu2LogText.innerHTML = `CPU2: ${cpu2Action.log_text} (-${cpu2Cost}銭)<br> 残り: ${gameState.players[2].money}銭`;
@@ -98,33 +99,36 @@ function handlePlayerAction(actionIndex) {
     cpu2LogText.classList.add("fast-fade-in");
   }, 400);
 
-  // モーダルクリックイベントリスナーを追加
-  const handleModalClick = () => {
-    modalEffect.style.display = 'none';
-    effectPic.innerHTML = '';
-    playerLogText.textContent = '';
-    cpu1LogText.textContent = '';
-    cpu2LogText.textContent = '';
-    playerLogText.classList.remove("fast-fade-in");
-    cpu1LogText.classList.remove("fast-fade-in");
-    cpu2LogText.classList.remove("fast-fade-in");
-    
-    // ラウンドを進める
-    gameState.round++;
-    
-    // ラウンド表示を更新
-    if (gameState.round <= 6) {
-      roundCounter.textContent = `${gameState.round}/6 ラウンド`;
-    } else {
-      finishGame();
-    }
-    
-    // クリックイベントリスナーを削除
-    modalEffect.removeEventListener('click', handleModalClick);
-  };
-  
-  modalEffect.addEventListener('click', handleModalClick);
+  setTimeout(function(){
+    // ログ表示完了後にクリックイベントリスナーを追加
+    const handleModalClick = () => {
+      modalEffect.style.display = 'none';
+      effectPic.innerHTML = '';
+      playerLogText.textContent = '';
+      cpu1LogText.textContent = '';
+      cpu2LogText.textContent = '';
+      playerLogText.classList.remove("fast-fade-in");
+      cpu1LogText.classList.remove("fast-fade-in");
+      cpu2LogText.classList.remove("fast-fade-in");
+
+      // ラウンドを進める
+      gameState.round++;
+          
+      // ラウンド表示を更新
+      if (gameState.round <= 6) {
+        roundCounter.textContent = `${gameState.round}/6 ラウンド`;
+      } else {
+        finishGame();
+      }
+          
+      // クリックイベントリスナーを削除
+      modalEffect.removeEventListener('click', handleModalClick);
+    };
+    modalEffect.addEventListener('click', handleModalClick);
+  }, 700)
+
 }
+  
 
 // min_costからmax_costまでのランダムな整数を生成する関数
 function calculateRandomCost(min, max) {
